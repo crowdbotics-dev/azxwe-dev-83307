@@ -1,130 +1,27 @@
-import React, { useEffect, useState } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  Pressable,
-  Image,
-  FlatList,
-  TextInput
-} from "react-native";
+import React from "react";
+import { Text, View, StyleSheet, Image, Pressable } from "react-native";
 
-const OrderDetails = () => {
-  const [productList, setProductList] = useState([]);
-  const [promoCode, setPromoCode] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
-  useEffect(() => {
-    setProductList([
-      {
-        id: 1,
-        name: "Product name",
-        price: 12.59,
-        discountedPrice: 10,
-        deliveryType: "Free delivery",
-        rating: 4.8,
-        image: require("./assets/productImage.png")
-      }
-    ]);
-  }, []);
+const OrderSuccess = () => {
   return (
     <View style={styles.container}>
-      <FlatList
-        style={styles.list}
-        ListHeaderComponent={() => (
-          <View>
-            <View style={styles.flexRow}>
-              <Text style={styles.fnt16}>Deliver to</Text>
-              <Pressable>
-                <Text style={styles.fnt16}>Edit</Text>
-              </Pressable>
-            </View>
-            <View style={styles.separator} />
-            <View style={styles.tile}>
-              <View style={styles.flexRow}>
-                <Image
-                  source={require("./assets/locationIcon.png")}
-                  style={styles.icon}
-                />
-                <Text style={styles.deliveryAddress}>1234 Street, City</Text>
-                <Image
-                  source={require("./assets/searchIcon.png")}
-                  style={styles.icon}
-                />
-              </View>
-            </View>
-            <View style={styles.separator} />
-            <View style={styles.tile}>
-              <View style={styles.flexRow}>
-                <Text style={styles.fnt16}>Your Order</Text>
-                <Text style={[styles.fnt16, styles.green]}>Add Items</Text>
-              </View>
-            </View>
-            <View style={styles.separator} />
-          </View>
-        )}
-        data={productList}
-        keyExtractor={item => item.id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.productContainer}>
-            <Image source={item.image} style={styles.productImage} />
-            <View style={styles.productDetails}>
-              <Text style={styles.productName}>{item.name}</Text>
-              <Text style={styles.pricingText}>
-                ${item.discountedPrice.toFixed(2)}{" "}
-                <Text style={styles.lineThrough}>${item.price.toFixed(2)}</Text>
-              </Text>
-              <View style={styles.deliveryContainer}>
-                <View style={styles.greenCircle}>
-                  <Text style={[styles.white, styles.bold]}>%</Text>
-                </View>
-                <Text style={styles.fnt12}>Free delivery</Text>
-              </View>
-            </View>
-            <Pressable>
-              <Text style={styles.editText}>Edit</Text>
-            </Pressable>
-          </View>
-        )}
-        ListFooterComponent={() => (
-          <View style={styles.footer}>
-            <View style={styles.separator} />
-            <View style={styles.tile}>
-              <Input
-                text="Promo code"
-                value={promoCode}
-                onChange={text => setPromoCode(text)}
-                containerStyle={styles.inputContainer}
-              />
-              <Input
-                text="Card number"
-                value={cardNumber}
-                onChange={text => setCardNumber(text)}
-                containerStyle={styles.inputContainer}
-                icon={require("./assets/arrowIcon.png")}
-                placeholder="xxxx-xxxx-xxxx-xxxx"
-              />
-              <View style={styles.detailsContainer}>
-                <View style={styles.flexRow}>
-                  <Text style={styles.subText}>Promo code</Text>
-                  <Text>$0</Text>
-                </View>
-                <View style={styles.flexRow}>
-                  <Text style={styles.subText}>Delivery Fee</Text>
-                  <Text>$0</Text>
-                </View>
-                <View style={styles.flexRow}>
-                  <Text style={styles.subText}>Product Price</Text>
-                  <Text>$10.00</Text>
-                </View>
-                <View style={styles.flexRow}>
-                  <Text style={styles.subText}>Total Price</Text>
-                  <Text>$10.00</Text>
-                </View>
-              </View>
-              <Button buttonText="Place order" style={styles.button} />
-            </View>
-          </View>
-        )}
+      <View style={styles.body}>
+        <View style={styles.circle}>
+          <Image
+            source={require("./assets/checkIcon.png")}
+            style={styles.check}
+          />
+        </View>
+        <Text style={styles.heading}>Order Sucessful</Text>
+        <Text style={styles.subHeading}>Your order has been processed.</Text>
+      </View>
+
+      <Button buttonText="Go back" style={styles.button} />
+      <Button
+        buttonText="Track order"
+        style={styles.button}
+        color="#fff"
+        textColor="#000"
+        outlineColor="#000"
       />
     </View>
   );
@@ -132,211 +29,47 @@ const OrderDetails = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f1f1f1",
-    paddingTop: 20
-  },
-  separator: {
-    height: 20,
-    width: "100%",
-    backgroundColor: "#f1f1f1"
-  },
-  flexRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 20
-  },
-  tile: {
     backgroundColor: "#fff",
-    paddingVertical: 10
+    justifyContent: "center"
   },
-  fnt16: {
-    fontSize: 16
-  },
-  icon: {
-    width: 30,
-    height: 30,
-    resizeMode: "contain"
-  },
-  deliveryAddress: {
-    fontSize: 16,
-    color: "#22292E",
-    flex: 1,
-    marginLeft: 10
-  },
-  green: {
-    color: "#12D790"
-  },
-  productContainer: {
-    flexDirection: "row",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    backgroundColor: "#fff"
-  },
-  productImage: {
-    height: 80,
-    width: 70,
-    borderRadius: 10
-  },
-  productDetails: {
-    flex: 1,
-    marginLeft: 20
-  },
-  productName: {
-    fontSize: 16,
-    color: "#000",
-    fontWeight: "bold",
-    marginBottom: 5
-  },
-  pricingText: {
-    fontSize: 14,
-    color: "#7E7E7E",
-    marginBottom: 5
-  },
-  lineThrough: {
-    textDecorationLine: "line-through",
-    color: "#ccc",
-    textDecorationStyle: "solid"
-  },
-  deliveryContainer: {
-    flexDirection: "row",
+  circle: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
     alignItems: "center",
-    marginVertical: 5
-  },
-  greenCircle: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    backgroundColor: "#12D790",
     justifyContent: "center",
-    alignItems: "center",
-    marginRight: 5
+    backgroundColor: "#12D790",
+    alignSelf: "center"
   },
-  white: {
-    color: "#fff"
+  check: {
+    width: 50,
+    height: 50
   },
-  fnt12: {
-    fontSize: 12
+  heading: {
+    marginTop: 10,
+    fontSize: 32,
+    alignSelf: "center",
+    color: "#000"
   },
-  bold: {
-    fontWeight: "bold"
-  },
-  editText: {
+  subHeading: {
     fontSize: 16,
-    color: "#EA4335",
-    marginRight: 10
-  },
-  inputContainer: {
-    marginHorizontal: 20
-  },
-  detailsContainer: {
-    marginTop: 20
-  },
-  subText: {
+    alignSelf: "center",
+    marginTop: 10,
     color: "#8A8A8E"
   },
-  button: {
-    marginHorizontal: 40,
+  body: {
     flex: 1,
-    marginTop: 30,
-    marginBottom: 20
+    alignItems: "center",
+    justifyContent: "center"
   },
-  footer: {
-    backgroundColor: "#fff",
-    flex: 1
+  button: {
+    marginBottom: 20,
+    marginHorizontal: 20
   }
 });
 
-export default OrderDetails;
+export default OrderSuccess;
 
-const Input = props => {
-  return (
-    <View style={[inputStyles.inputContainer, props.containerStyle]}>
-      {props.text
-        ? (
-        <Text style={inputStyles.inputText}>{props.text}</Text>
-          )
-        : null}
-
-      <TextInput
-        style={[
-          inputStyles.input,
-          props.style,
-          props.textArea ? inputStyles.textArea : null
-        ]}
-        placeholder={props.placeholder ? props.placeholder : "Enter"}
-        value={props.value}
-        onChangeText={props.onChange()}
-        placeholderTextColor={
-          props.placeholderTextColor ? props.placeholderTextColor : "#9B9B9B"
-        }
-        editable={props.editable !== false}
-        autoCapitalize="none"
-        autoCorrect={false}
-        multiline={!!props.textArea}
-      />
-      {props.errorText
-        ? (
-        <Text style={inputStyles.error}>{props.errorText}</Text>
-          )
-        : null}
-      {props.icon
-        ? (
-        <Image
-          source={props.icon}
-          style={
-            props.text ? inputStyles.iconWithText : inputStyles.iconWithoutText
-          }
-        />
-          )
-        : null}
-      <View style={styles.children}>{props.children}</View>
-    </View>
-  );
-};
-
-const inputStyles = StyleSheet.create({
-  inputContainer: {
-    flexDirection: "column",
-    justifyContent: "center"
-  },
-  inputText: {
-    fontSize: 14,
-    marginLeft: 20,
-    color: "#111112"
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#e6e6e6",
-    borderRadius: 10,
-    padding: 10,
-    paddingLeft: 20,
-    marginVertical: 10,
-    width: "100%",
-    height: 50,
-    color: "#000"
-  },
-  iconWithText: {
-    position: "absolute",
-    right: 30,
-    top: 48,
-    width: 15,
-    height: 15,
-    resizeMode: "contain"
-  },
-  iconWithoutText: {
-    position: "absolute",
-    right: 30,
-    top: 28,
-    width: 15,
-    height: 15,
-    resizeMode: "contain"
-  },
-  textArea: {
-    height: 150
-  },
-  children: {}
-});
 const Button = params => {
   const backgroundColor = params.color || "#000";
   const textColor = params.textColor || "#fff";
