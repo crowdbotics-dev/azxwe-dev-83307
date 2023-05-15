@@ -1036,7 +1036,10 @@
     prop-types "^15.8.1"
     react-native-app-intro-slider "^4.0.4"
 
-"@modules/terms-and-conditions-webview@file:./modules/terms-and-conditions-webview/":
+"@modules/privacy-policy-webview@file:./modules/privacy-policy-webview/":
+  version "1.0.0"
+
+"@modules/terms-and-conditions-webview@file:./modules/terms-and-conditions-webview":
   version "1.0.0"
 
 "@react-native-community/cli-debugger-ui@^5.0.1":
